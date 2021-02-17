@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: lada-store
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lada_store
+    username: Nikita
+    password: 3450
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+
+server:
+  port: 9080
+  servlet:
+    context-path: /lada
+
+    
