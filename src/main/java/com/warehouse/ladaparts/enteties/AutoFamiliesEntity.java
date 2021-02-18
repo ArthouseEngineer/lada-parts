@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "auto_families", schema = "public", catalog = "lada_store")
 public class AutoFamiliesEntity {
-    private int id;
+    private Integer id;
     private String familyName;
     private Collection<AutoMarkPartsEntity> autoMarkPartsById;
     private Collection<AutoMarksEntity> autoMarksById;
@@ -15,11 +15,11 @@ public class AutoFamiliesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class AutoFamiliesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AutoFamiliesEntity that = (AutoFamiliesEntity) o;
-        return id == that.id && Objects.equals(familyName, that.familyName);
+        return id.equals(that.id) && Objects.equals(familyName, that.familyName);
     }
 
     @Override

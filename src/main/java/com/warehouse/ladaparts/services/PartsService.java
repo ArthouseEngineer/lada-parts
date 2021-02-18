@@ -2,11 +2,15 @@ package com.warehouse.ladaparts.services;
 
 import com.warehouse.ladaparts.converters.PartDTOToPartEntityConverter;
 import com.warehouse.ladaparts.converters.PartsEntityToPartDTOConverter;
+import com.warehouse.ladaparts.converters.UpdateAutoMarkPartDTORqToAutoMarkPartsEntityConverter;
+import com.warehouse.ladaparts.dto.model.PartCartDTO;
 import com.warehouse.ladaparts.dto.model.PartDTO;
 import com.warehouse.ladaparts.dto.rq.PartRqDTO;
+import com.warehouse.ladaparts.dto.rq.UpdateAutoMarkPartDTORq;
 import com.warehouse.ladaparts.dto.rq.UpdatePartDTORq;
 import com.warehouse.ladaparts.enteties.PartsEntity;
 import com.warehouse.ladaparts.exceptions.EntityNotFoundException;
+import com.warehouse.ladaparts.repository.AutoMarkPartsRepository;
 import com.warehouse.ladaparts.repository.PartsRepository;
 import com.warehouse.ladaparts.repository.PartsRepositoryCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +23,17 @@ public class PartsService {
 
     private PartsRepository partsRepository;
     private PartsRepositoryCriteria partsRepositoryCriteria;
+    private AutoMarkPartsRepository autoMarkPartsRepository;
     private PartDTOToPartEntityConverter partDTOToPartEntityConverter;
     private PartsEntityToPartDTOConverter partsEntityToPartDTOConverter;
+    private UpdateAutoMarkPartDTORqToAutoMarkPartsEntityConverter updateAutoMarkPartDTORqToAutoMarkPartsEntityConverter;
 
     public void save(UpdatePartDTORq updatePartDTORq) {
         partsRepository.save(partDTOToPartEntityConverter.apply(updatePartDTORq));
+    }
+
+    public void setModelCompatibilityWithPart(UpdateAutoMarkPartDTORq updateAutoMarkPartDTORq) {
+        autoMarkPartsRepository.save(updateAutoMarkPartDTORqToAutoMarkPartsEntityConverter.apply(updateAutoMarkPartDTORq));
     }
 
     public void deleteById(Integer id) {
@@ -37,6 +47,10 @@ public class PartsService {
 
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
         return partsRepositoryCriteria.getPartByFilter(partRqDTO);
+    }
+
+    public List<PartCartDTO> getPartCartByPartName(String partName) {
+        return partsRepositoryCriteria.getPartCartByPartName(partName);
     }
 
     @Autowired
@@ -57,5 +71,15 @@ public class PartsService {
     @Autowired
     public void setPartsEntityToPartDTOConverter(PartsEntityToPartDTOConverter partsEntityToPartDTOConverter) {
         this.partsEntityToPartDTOConverter = partsEntityToPartDTOConverter;
+    }
+
+    @Autowired
+    public void setAutoMarkPartsRepository(AutoMarkPartsRepository autoMarkPartsRepository) {
+        this.autoMarkPartsRepository = autoMarkPartsRepository;
+    }
+
+    @Autowired
+    public void setUpdateAutoMarkPartDTORqToAutoMarkPartsEntityConverter(UpdateAutoMarkPartDTORqToAutoMarkPartsEntityConverter updateAutoMarkPartDTORqToAutoMarkPartsEntityConverter) {
+        this.updateAutoMarkPartDTORqToAutoMarkPartsEntityConverter = updateAutoMarkPartDTORqToAutoMarkPartsEntityConverter;
     }
 }

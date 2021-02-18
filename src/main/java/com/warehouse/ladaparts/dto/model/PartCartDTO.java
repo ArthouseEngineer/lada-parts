@@ -1,18 +1,18 @@
 package com.warehouse.ladaparts.dto.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public class  PartCartDTO  extends  PartDTO  {
-    private Integer weight;
+public class PartCartDTO extends PartDTO {
+    private BigDecimal weight;
     private List<ModelDTO> models;
     private List<PartDTO> compositionParts;
-    private List<ModelDTO> modelsList;
 
-    public Integer getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
@@ -33,11 +33,4 @@ public class  PartCartDTO  extends  PartDTO  {
         this.compositionParts = compositionParts;
     }
 
-    public List<ModelDTO> getModelsList() {
-        return modelsList;
-    }
-
-    public void setModelsList(List<ModelDTO> modelsList) {
-        this.modelsList = modelsList;
-    }
 }

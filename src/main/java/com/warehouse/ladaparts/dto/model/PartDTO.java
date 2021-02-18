@@ -4,10 +4,17 @@ import java.math.BigDecimal;
 
 public class PartDTO {
 
+    private Integer id;
     private String name;
     private BigDecimal price;
 
-    public PartDTO() {
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
