@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "models", schema = "public", catalog = "lada_store")
 public class ModelsEntity {
-    private int id;
+    private Integer id;
     private String model;
     private Collection<AutoMarkPartsEntity> autoMarkPartsById;
     private Collection<AutoMarksEntity> autoMarksById;
@@ -15,11 +15,11 @@ public class ModelsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

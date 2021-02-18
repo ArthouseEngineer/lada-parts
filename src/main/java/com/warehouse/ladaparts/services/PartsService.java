@@ -2,6 +2,7 @@ package com.warehouse.ladaparts.services;
 
 import com.warehouse.ladaparts.converters.PartDTOToPartEntityConverter;
 import com.warehouse.ladaparts.converters.PartsEntityToPartDTOConverter;
+import com.warehouse.ladaparts.dto.model.PartCartDTO;
 import com.warehouse.ladaparts.dto.model.PartDTO;
 import com.warehouse.ladaparts.dto.rq.PartRqDTO;
 import com.warehouse.ladaparts.dto.rq.UpdatePartDTORq;
@@ -37,6 +38,10 @@ public class PartsService {
 
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
         return partsRepositoryCriteria.getPartByFilter(partRqDTO);
+    }
+
+    public List<PartCartDTO> getPartCartByPartName(String partName) {
+        return partsRepositoryCriteria.getPartCartByPartName(partName);
     }
 
     @Autowired

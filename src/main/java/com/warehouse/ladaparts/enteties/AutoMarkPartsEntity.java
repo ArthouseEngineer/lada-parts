@@ -6,8 +6,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "auto_mark_parts", schema = "public", catalog = "lada_store")
 public class AutoMarkPartsEntity {
-    private int id;
-    private int partId;
+    private Integer id;
+    private Integer partId;
     private Integer autoFamilyId;
     private Integer autoModelId;
     private PartsEntity partsByPartId;
@@ -17,21 +17,21 @@ public class AutoMarkPartsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "part_id", nullable = false)
-    public int getPartId() {
+    public Integer getPartId() {
         return partId;
     }
 
-    public void setPartId(int partId) {
+    public void setPartId(Integer partId) {
         this.partId = partId;
     }
 

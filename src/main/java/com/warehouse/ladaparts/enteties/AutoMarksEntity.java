@@ -6,20 +6,20 @@ import java.util.Objects;
 @Entity
 @Table(name = "auto_marks", schema = "public", catalog = "lada_store")
 public class AutoMarksEntity {
-    private int id;
-    private int familyId;
-    private int modelId;
+    private Integer id;
+    private Integer familyId;
+    private Integer modelId;
     private AutoFamiliesEntity autoFamiliesByFamilyId;
     private ModelsEntity modelsByModelId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

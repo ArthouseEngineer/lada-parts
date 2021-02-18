@@ -1,5 +1,6 @@
 package com.warehouse.ladaparts.controllers;
 
+import com.warehouse.ladaparts.dto.model.PartCartDTO;
 import com.warehouse.ladaparts.dto.model.PartDTO;
 import com.warehouse.ladaparts.dto.rq.PartRqDTO;
 import com.warehouse.ladaparts.dto.rq.UpdatePartDTORq;
@@ -20,6 +21,11 @@ public class PartsController {
     @PostMapping("/getPart")
     public List<PartDTO> getPart(@RequestBody PartRqDTO partRqDTO) {
         return partsService.getPartByFilter(partRqDTO);
+    }
+
+    @PostMapping( value = "/getPartCart", params = "partName")
+    public List<PartCartDTO> getPartCart(@RequestParam String partName) {
+         return partsService.getPartCartByPartName(partName);
     }
 
     @PostMapping("/updatePart")

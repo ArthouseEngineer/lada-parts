@@ -1,13 +1,11 @@
 package com.warehouse.ladaparts.repository;
 
+import com.warehouse.ladaparts.converters.PartsEntityToPartCartDTOConverter;
 import com.warehouse.ladaparts.converters.PartsEntityToPartDTOConverter;
 import com.warehouse.ladaparts.dto.model.PartCartDTO;
 import com.warehouse.ladaparts.dto.model.PartDTO;
 import com.warehouse.ladaparts.dto.rq.PartRqDTO;
-import com.warehouse.ladaparts.enteties.AutoFamiliesEntity;
-import com.warehouse.ladaparts.enteties.AutoMarkPartsEntity;
-import com.warehouse.ladaparts.enteties.ModelsEntity;
-import com.warehouse.ladaparts.enteties.PartsEntity;
+import com.warehouse.ladaparts.enteties.*;
 import com.warehouse.ladaparts.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,7 +20,9 @@ import java.util.stream.Collectors;
 public class PartsRepositoryCriteria {
 
     private EntityManager entityManager;
-    private PartsEntityToPartDTOConverter converter;
+    private PartsEntityToPartDTOConverter partsEntityToPartDTOConverter;
+    private PartsEntityToPartCartDTOConverter partsEntityToPartCartDTOConverter;
+    private final static String ID = "id";
 
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -52,10 +52,23 @@ public class PartsRepositoryCriteria {
             throw new EntityNotFoundException(PartsEntity.class,searchParamsMap);
         }
         return partsEntities.stream()
-                .map(converter)
+                .map(partsEntityToPartDTOConverter)
                 .collect(Collectors.toList());
     }
-    
+
+    public List<PartCartDTO> getPartCartByPartName(String partName) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<PartsEntity> criteriaQuery = cb.createQuery(PartsEntity.class);
+        Root<PartsEntity> partsEntityRoot = criteriaQuery.from(PartsEntity.class);
+        criteriaQuery.where(cb.like(cb.upper(partsEntityRoot.get("name")), "%" + partName.toUpperCase(Locale.ROOT) + "%"));
+        List<PartsEntity> partsEntities = entityManager.createQuery(criteriaQuery).getResultList();
+        if (CollectionUtils.isEmpty(partsEntities)) {
+            throw new EntityNotFoundException(PartsEntity.class,partName);
+        }
+        return partsEntities.stream()
+                .map(partsEntityToPartCartDTOConverter)
+                .collect(Collectors.toList());
+    }
 
 
     @Autowired
@@ -65,6 +78,11 @@ public class PartsRepositoryCriteria {
 
     @Autowired
     public void setConverter(PartsEntityToPartDTOConverter converter) {
-        this.converter = converter;
+        this.partsEntityToPartDTOConverter = converter;
+    }
+
+    @Autowired
+    public void setPartsEntityToPartCartDTOConverter(PartsEntityToPartCartDTOConverter partsEntityToPartCartDTOConverter) {
+        this.partsEntityToPartCartDTOConverter = partsEntityToPartCartDTOConverter;
     }
 }

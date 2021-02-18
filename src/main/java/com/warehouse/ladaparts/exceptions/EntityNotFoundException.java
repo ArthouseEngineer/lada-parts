@@ -1,7 +1,5 @@
 package com.warehouse.ladaparts.exceptions;
 
-import org.springframework.util.StringUtils;
-
 import java.util.Map;
 
 public class EntityNotFoundException  extends RuntimeException {

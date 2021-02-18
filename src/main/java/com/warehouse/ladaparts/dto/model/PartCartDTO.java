@@ -2,11 +2,10 @@ package com.warehouse.ladaparts.dto.model;
 
 import java.util.List;
 
-public class  PartCartDTO  extends  PartDTO  {
+public class PartCartDTO extends PartDTO {
     private Integer weight;
     private List<ModelDTO> models;
     private List<PartDTO> compositionParts;
-    private List<ModelDTO> modelsList;
 
     public Integer getWeight() {
         return weight;
@@ -33,11 +32,4 @@ public class  PartCartDTO  extends  PartDTO  {
         this.compositionParts = compositionParts;
     }
 
-    public List<ModelDTO> getModelsList() {
-        return modelsList;
-    }
-
-    public void setModelsList(List<ModelDTO> modelsList) {
-        this.modelsList = modelsList;
-    }
 }
