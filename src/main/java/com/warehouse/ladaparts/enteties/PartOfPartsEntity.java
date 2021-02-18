@@ -6,9 +6,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "part_of_parts", schema = "public", catalog = "lada_store")
 public class PartOfPartsEntity {
-    private int id;
-    private int partId;
-    private int compositivePartId;
+    private Integer id;
+    private Integer partId;
+    private Integer compositivePartId;
     private Integer countOfCompositivePart;
     private PartsEntity partsByPartId;
     private PartsEntity partsByCompositivePartId;
@@ -16,31 +16,31 @@ public class PartOfPartsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "part_id", nullable = false)
-    public int getPartId() {
+    public Integer getPartId() {
         return partId;
     }
 
-    public void setPartId(int partId) {
+    public void setPartId(Integer partId) {
         this.partId = partId;
     }
 
     @Basic
     @Column(name = "compositive_part_id", nullable = false)
-    public int getCompositivePartId() {
+    public Integer getCompositivePartId() {
         return compositivePartId;
     }
 
-    public void setCompositivePartId(int compositivePartId) {
+    public void setCompositivePartId(Integer compositivePartId) {
         this.compositivePartId = compositivePartId;
     }
 
@@ -59,7 +59,7 @@ public class PartOfPartsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PartOfPartsEntity that = (PartOfPartsEntity) o;
-        return id == that.id && partId == that.partId && compositivePartId == that.compositivePartId && Objects.equals(countOfCompositivePart, that.countOfCompositivePart);
+        return id.equals(that.id) && partId.equals(that.partId) && compositivePartId.equals(that.compositivePartId) && Objects.equals(countOfCompositivePart, that.countOfCompositivePart);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class PartOfPartsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "part_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "part_id", referencedColumnName = "id", nullable = false,updatable = false, insertable = false)
     public PartsEntity getPartsByPartId() {
         return partsByPartId;
     }
@@ -78,7 +78,7 @@ public class PartOfPartsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "compositive_part_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "compositive_part_id", referencedColumnName = "id", nullable = false,updatable = false, insertable = false)
     public PartsEntity getPartsByCompositivePartId() {
         return partsByCompositivePartId;
     }

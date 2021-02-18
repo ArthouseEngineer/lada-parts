@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "parts", schema = "public", catalog = "lada_store")
 public class PartsEntity {
-    private int id;
+    private Integer id;
     private String name;
     private BigDecimal price;
     private BigDecimal weight;
@@ -16,23 +16,14 @@ public class PartsEntity {
     private Collection<PartOfPartsEntity> partOfPartsById;
     private Collection<PartOfPartsEntity> partOfPartsById_0;
 
-    public PartsEntity(String name, BigDecimal price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public PartsEntity() {
-
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -71,7 +62,7 @@ public class PartsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PartsEntity that = (PartsEntity) o;
-        return id == that.id && price.equals(that.price) && weight.equals(that.weight) && Objects.equals(name, that.name);
+        return id.equals(that.id) && price.equals(that.price) && weight.equals(that.weight) && Objects.equals(name, that.name);
     }
 
     @Override
@@ -79,7 +70,7 @@ public class PartsEntity {
         return Objects.hash(id, name, price, weight);
     }
 
-    @OneToMany(mappedBy = "partsByPartId")
+    @OneToMany(mappedBy = "partsByPartId", cascade = CascadeType.REMOVE)
     public Collection<AutoMarkPartsEntity> getAutoMarkPartsById() {
         return autoMarkPartsById;
     }
@@ -88,7 +79,7 @@ public class PartsEntity {
         this.autoMarkPartsById = autoMarkPartsById;
     }
 
-    @OneToMany(mappedBy = "partsByPartId")
+    @OneToMany(mappedBy = "partsByPartId", cascade = CascadeType.REMOVE)
     public Collection<PartOfPartsEntity> getPartOfPartsById() {
         return partOfPartsById;
     }
@@ -97,7 +88,7 @@ public class PartsEntity {
         this.partOfPartsById = partOfPartsById;
     }
 
-    @OneToMany(mappedBy = "partsByCompositivePartId")
+    @OneToMany(mappedBy = "partsByCompositivePartId", cascade = CascadeType.REMOVE)
     public Collection<PartOfPartsEntity> getPartOfPartsById_0() {
         return partOfPartsById_0;
     }

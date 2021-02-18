@@ -3,6 +3,7 @@ package com.warehouse.ladaparts.controllers;
 import com.warehouse.ladaparts.dto.model.PartCartDTO;
 import com.warehouse.ladaparts.dto.model.PartDTO;
 import com.warehouse.ladaparts.dto.rq.PartRqDTO;
+import com.warehouse.ladaparts.dto.rq.UpdateAutoMarkPartDTORq;
 import com.warehouse.ladaparts.dto.rq.UpdatePartDTORq;
 import com.warehouse.ladaparts.services.PartsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +19,60 @@ public class PartsController {
 
     private PartsService partsService;
 
+    /**
+     * @param partRqDTO ДТО с возможность кастомных фильтров, на модель/семейство
+     * @return Спсиок найденных запчастей
+     */
     @PostMapping("/getPart")
     public List<PartDTO> getPart(@RequestBody PartRqDTO partRqDTO) {
         return partsService.getPartByFilter(partRqDTO);
     }
 
-    @PostMapping( value = "/getPartCart", params = "partName")
+    /**
+     * @param partName - Имя запчасти для которой формируем карточку
+     * @return - Карточка запчкаи
+     */
+    @PostMapping(value = "/getPartCart")
     public List<PartCartDTO> getPartCart(@RequestParam String partName) {
-         return partsService.getPartCartByPartName(partName);
+        return partsService.getPartCartByPartName(partName);
     }
 
+    /**
+     * @param updatePartDTORq  - DTO обновляемой запчасти
+     * @return Успешность обновления
+     */
     @PostMapping("/updatePart")
     public ResponseEntity<Boolean> updatePart(@RequestBody UpdatePartDTORq updatePartDTORq) {
         PartDTO currentPart = partsService.findById(updatePartDTORq.getId());
         if (currentPart == null) {
             partsService.save(updatePartDTORq);
-            return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         partsService.save(updatePartDTORq);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    /**
+     * Сохраняем запчасть согласно ДТО
+     * @param updatePartDTORq - ДТО с информацией по запчасти
+     */
     @PostMapping("/savePart")
     public void savePart(@RequestBody UpdatePartDTORq updatePartDTORq) {
         partsService.save(updatePartDTORq);
     }
 
-    @GetMapping("/deletePartById/{id}")
-    public void deletePartById(@PathVariable Integer id) {
+    @PostMapping("/setModelCompatibility")
+    public void setModelCompatibilityWithPart(@RequestBody UpdateAutoMarkPartDTORq updateAutoMarkPartDTORq) {
+        partsService.setModelCompatibilityWithPart(updateAutoMarkPartDTORq);
+    }
+
+
+    /**
+     * Удаляем запчасть по заданному ИД
+     * @param id - ИД удаляемой запчасти
+     */
+    @DeleteMapping("/deletePartById")
+    public void deletePartById(@RequestParam Integer id) {
         partsService.deleteById(id);
     }
 

@@ -12,6 +12,7 @@ public class PartsEntityToPartDTOConverter implements Function<PartsEntity, Part
     @Override
     public PartDTO apply(PartsEntity partsEntity) {
         PartDTO partDTO = new PartDTO();
+        partDTO.setId(partsEntity.getId());
         partDTO.setName(partsEntity.getName());
         partDTO.setPrice(partsEntity.getPrice());
         return partDTO;

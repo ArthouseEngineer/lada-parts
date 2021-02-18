@@ -3,7 +3,6 @@ package com.warehouse.ladaparts.exceptions.handlers;
 import com.warehouse.ladaparts.erros.ApiError;
 import com.warehouse.ladaparts.exceptions.EntityNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,20 +16,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(
-            EntityNotFoundException ex) {
+    protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         ApiError apiError = new ApiError(NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleDataIntegrityViolation(ConstraintViolationException ex) {
         if (ex.getCause() instanceof ConstraintViolationException) {
-            return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database error", ex.getCause()));
+            return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database error" + ex.getMessage(), ex.getCause()));
         }
-        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex));
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),ex));
     }
 
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {

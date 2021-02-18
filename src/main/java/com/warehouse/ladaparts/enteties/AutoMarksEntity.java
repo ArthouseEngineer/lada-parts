@@ -24,22 +24,22 @@ public class AutoMarksEntity {
     }
 
     @Basic
-    @Column(name = "family_id", nullable = false)
-    public int getFamilyId() {
+    @Column(name = "family_id", nullable = false,updatable = false, insertable = false)
+    public Integer getFamilyId() {
         return familyId;
     }
 
-    public void setFamilyId(int familyId) {
+    public void setFamilyId(Integer familyId) {
         this.familyId = familyId;
     }
 
     @Basic
-    @Column(name = "model_id", nullable = false)
-    public int getModelId() {
+    @Column(name = "model_id", nullable = false,updatable = false, insertable = false)
+    public Integer getModelId() {
         return modelId;
     }
 
-    public void setModelId(int modelId) {
+    public void setModelId(Integer modelId) {
         this.modelId = modelId;
     }
 
@@ -48,7 +48,7 @@ public class AutoMarksEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AutoMarksEntity that = (AutoMarksEntity) o;
-        return id == that.id && familyId == that.familyId && modelId == that.modelId;
+        return id.equals(that.id) && familyId.equals(that.familyId) && modelId.equals(that.modelId);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class AutoMarksEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "family_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "family_id", referencedColumnName = "id", nullable = false,updatable = false, insertable = false)
     public AutoFamiliesEntity getAutoFamiliesByFamilyId() {
         return autoFamiliesByFamilyId;
     }
@@ -67,7 +67,7 @@ public class AutoMarksEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "model_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "model_id", referencedColumnName = "id", nullable = false,updatable = false, insertable = false)
     public ModelsEntity getModelsByModelId() {
         return modelsByModelId;
     }

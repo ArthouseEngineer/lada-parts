@@ -38,7 +38,7 @@ public class AutoFamiliesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AutoFamiliesEntity that = (AutoFamiliesEntity) o;
-        return id == that.id && Objects.equals(familyName, that.familyName);
+        return id.equals(that.id) && Objects.equals(familyName, that.familyName);
     }
 
     @Override

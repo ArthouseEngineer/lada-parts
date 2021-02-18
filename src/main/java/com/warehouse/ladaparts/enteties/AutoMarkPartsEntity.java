@@ -36,7 +36,7 @@ public class AutoMarkPartsEntity {
     }
 
     @Basic
-    @Column(name = "auto_family_id", nullable = true)
+    @Column(name = "auto_family_id")
     public Integer getAutoFamilyId() {
         return autoFamilyId;
     }
@@ -46,7 +46,7 @@ public class AutoMarkPartsEntity {
     }
 
     @Basic
-    @Column(name = "auto_model_id", nullable = true)
+    @Column(name = "auto_model_id")
     public Integer getAutoModelId() {
         return autoModelId;
     }
@@ -60,7 +60,7 @@ public class AutoMarkPartsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AutoMarkPartsEntity that = (AutoMarkPartsEntity) o;
-        return id == that.id && partId == that.partId && Objects.equals(autoFamilyId, that.autoFamilyId) && Objects.equals(autoModelId, that.autoModelId);
+        return id.equals(that.id) && partId.equals(that.partId) && Objects.equals(autoFamilyId, that.autoFamilyId) && Objects.equals(autoModelId, that.autoModelId);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AutoMarkPartsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "part_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "part_id", referencedColumnName = "id", nullable = false, updatable = false, insertable = false)
     public PartsEntity getPartsByPartId() {
         return partsByPartId;
     }
@@ -79,7 +79,7 @@ public class AutoMarkPartsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "auto_family_id", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "auto_family_id", referencedColumnName = "id", updatable = false, insertable = false)
     public AutoFamiliesEntity getAutoFamiliesByAutoFamilyId() {
         return autoFamiliesByAutoFamilyId;
     }
@@ -89,7 +89,7 @@ public class AutoMarkPartsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "auto_model_id", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "auto_model_id", referencedColumnName = "id", updatable = false, insertable = false)
     public ModelsEntity getModelsByAutoModelId() {
         return modelsByAutoModelId;
     }

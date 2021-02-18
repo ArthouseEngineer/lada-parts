@@ -38,7 +38,7 @@ public class ModelsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModelsEntity that = (ModelsEntity) o;
-        return id == that.id && Objects.equals(model, that.model);
+        return id.equals(that.id) && Objects.equals(model, that.model);
     }
 
     @Override

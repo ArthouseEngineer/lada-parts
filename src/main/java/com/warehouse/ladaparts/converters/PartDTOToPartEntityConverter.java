@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 @Service
 public class PartDTOToPartEntityConverter implements Function<UpdatePartDTORq, PartsEntity> {
+
     @Override
     public PartsEntity apply(UpdatePartDTORq updatePartDTORq) {
         PartsEntity partsEntity = new PartsEntity();
@@ -19,4 +20,5 @@ public class PartDTOToPartEntityConverter implements Function<UpdatePartDTORq, P
         partsEntity.setWeight(updatePartDTORq.getWeight());
         return partsEntity;
     }
+
 }
