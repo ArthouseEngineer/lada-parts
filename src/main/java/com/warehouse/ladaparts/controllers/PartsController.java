@@ -38,6 +38,15 @@ public class PartsController {
     }
 
     /**
+     * @param page - Страница для формирования списка запчастей, выдаем по  10 на страницу
+     * @return - Список запчастей
+     */
+    @PostMapping(value = "/getParts")
+    public List<PartDTO> getAllPartsPageable(@RequestParam Integer page) {
+        return partsService.getAllPartsPageable(page);
+    }
+
+    /**
      * @param updatePartDTORq  - DTO обновляемой запчасти
      * @return Успешность обновления
      */
@@ -61,6 +70,9 @@ public class PartsController {
         partsService.save(updatePartDTORq);
     }
 
+    /**
+     * Устанавливаеем совместимость запчасти с марками
+     */
     @PostMapping("/setModelCompatibility")
     public void setModelCompatibilityWithPart(@RequestBody UpdateAutoMarkPartDTORq updateAutoMarkPartDTORq) {
         partsService.setModelCompatibilityWithPart(updateAutoMarkPartDTORq);

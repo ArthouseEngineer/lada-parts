@@ -14,9 +14,12 @@ import com.warehouse.ladaparts.repository.AutoMarkPartsRepository;
 import com.warehouse.ladaparts.repository.PartsRepository;
 import com.warehouse.ladaparts.repository.PartsRepositoryCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PartsService {
@@ -43,6 +46,13 @@ public class PartsService {
     public PartDTO findById(Integer id) {
         return partsEntityToPartDTOConverter.apply(partsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(PartsEntity.class, id.toString())));
+    }
+
+    public List<PartDTO> getAllPartsPageable(Integer page) {
+        Pageable pageable = PageRequest.of(--page, 10);
+        return partsRepository.findAll(pageable).stream()
+                .map(partsEntityToPartDTOConverter)
+                .collect(Collectors.toList());
     }
 
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
