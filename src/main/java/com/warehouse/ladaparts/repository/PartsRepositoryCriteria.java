@@ -28,6 +28,14 @@ public class PartsRepositoryCriteria {
     private PartsEntityToPartDTOConverter partsEntityToPartDTOConverter;
     private PartsEntityToPartCartDTOConverter partsEntityToPartCartDTOConverter;
 
+    /**
+     * В качестве кретиев фильтрации можно добавить
+     * name - Название запчасти
+     * model - Совместимость с моделью
+     * family - Совместимость с семейством
+     * @param partRqDTO - ДТО фильтрации
+     * @return {@link} список с информацей по найденной детали PartDTO
+     */
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PartsEntity> criteriaQuery = cb.createQuery(PartsEntity.class);
@@ -59,6 +67,10 @@ public class PartsRepositoryCriteria {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param partName - Найменование запчасти
+     * @return Список карточек найденных запчастей
+     */
     public List<PartCartDTO> getPartCartByPartName(String partName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PartsEntity> criteriaQuery = cb.createQuery(PartsEntity.class);
