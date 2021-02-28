@@ -24,7 +24,7 @@ public class AutoMarksEntity {
     }
 
     @Basic
-    @Column(name = "family_id", nullable = false,updatable = false, insertable = false)
+    @Column(name = "family_id", nullable = false)
     public Integer getFamilyId() {
         return familyId;
     }
@@ -34,7 +34,7 @@ public class AutoMarksEntity {
     }
 
     @Basic
-    @Column(name = "model_id", nullable = false,updatable = false, insertable = false)
+    @Column(name = "model_id", nullable = false)
     public Integer getModelId() {
         return modelId;
     }

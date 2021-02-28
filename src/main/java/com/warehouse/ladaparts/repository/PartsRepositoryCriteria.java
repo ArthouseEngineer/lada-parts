@@ -29,12 +29,12 @@ public class PartsRepositoryCriteria {
     private PartsEntityToPartCartDTOConverter partsEntityToPartCartDTOConverter;
 
     /**
-     * В качестве кретиев фильтрации можно добавить
+     * В качестве кретериев фильтрации можно добавить
      * name - Название запчасти
      * model - Совместимость с моделью
      * family - Совместимость с семейством
      * @param partRqDTO - ДТО фильтрации
-     * @return {@link} список с информацей по найденной детали PartDTO
+     * @return Список с информацей по найденной детали PartDTO
      */
     public List<PartDTO> getPartByFilter(PartRqDTO partRqDTO) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -57,7 +57,8 @@ public class PartsRepositoryCriteria {
             predicates.add(cb.like(cb.upper(autoModels.get("model")), "%" + partRqDTO.getModel().toUpperCase(Locale.ROOT) + "%"));
             searchParamsMap.put("model", partRqDTO.getModel());
         }
-        criteriaQuery.where(predicates.toArray(new Predicate[0]));
+        // Так как заджоинились на модели если деталь подходит к нескольким модеям инфу в карточке не выводим, чтобы не дублировать информацию по запачасти дистинктнем
+        criteriaQuery.where(predicates.toArray(new Predicate[0])).distinct(true);
         List<PartsEntity> partsEntities = entityManager.createQuery(criteriaQuery).getResultList();
         if (CollectionUtils.isEmpty(partsEntities)) {
             throw new EntityNotFoundException(PartsEntity.class, searchParamsMap);
